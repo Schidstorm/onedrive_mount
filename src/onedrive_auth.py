@@ -3,5 +3,7 @@ from onedrivesdk.helpers import GetAuthCodeServer
 
 
 api = OnedriveApi()
-api.authenticate()
+print(api.generate_auth_url())
+code = input("Code: ")
+api.process_auth_code(code)
 api.save_session()

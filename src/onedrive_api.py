@@ -1,7 +1,7 @@
 import onedrivesdk
 from onedrivesdk.helpers import GetAuthCodeServer
 
-redirect_uri = "https://login.live.com/oauth20_desktop.srf"
+redirect_uri = "http://localhost:8080/"
 client_secret = '-3JRaoNZh-KunZr7Fty=zSYjWvdH:v38'
 client_id = 'ab0c1161-3935-472e-869f-4eaeef55fa73'
 api_base_url = 'https://api.onedrive.com/v1.0/'
@@ -19,7 +19,6 @@ class OnedriveApi:
 
     def load_session(self):
         self.auth_provider.load_session()
-        self.auth_provider.refresh_token()
         self.client = onedrivesdk.OneDriveClient(
             api_base_url, self.auth_provider, self.http_provider)
 
@@ -29,6 +28,7 @@ class OnedriveApi:
     def generate_auth_url(self):
         self.client = onedrivesdk.OneDriveClient(
             api_base_url, self.auth_provider, self.http_provider)
+
         return self.client.auth_provider.get_auth_url(redirect_uri)
 
     def authenticate(self):
@@ -39,10 +39,5 @@ class OnedriveApi:
         client.auth_provider.authenticate(code, redirect_uri, client_secret)
 
     def process_auth_code(self, code):
-        self.client = onedrivesdk.OneDriveClient(
-            api_base_url, self.auth_provider, self.http_provider)
-
         self.client.auth_provider.authenticate(
             code, redirect_uri, client_secret)
-        self.auth_provider
-        self.auth_provider.refresh_token()
